@@ -8,6 +8,8 @@ const styled = require('styled-components').default
 const css = require('styled-components').css
 const ServerStyleSheet = require('styled-components').ServerStyleSheet
 const React = require('react');
+const Comment = require('./tpl/comment');
+const Test = require('./tpl/test');
 const app = new Koa();
 const Box = styled.div`
 background: #666;
@@ -73,7 +75,7 @@ app.use(async ctx => {
   console.time('ServerStyleSheet')
   const sheet = new ServerStyleSheet()
   console.timeEnd('ServerStyleSheet')
-  let html= ReactDOMServer.renderToString(sheet.collectStyles(<Welcome />))
+  let html= ReactDOMServer.renderToString(sheet.collectStyles(React.createElement(Test)))
   const styleTags = sheet.getStyleTags()
   ctx.body =await ejs.renderFile('./server/view/index.ejs', {style:styleTags,html})
 });
